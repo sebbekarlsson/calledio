@@ -32,6 +32,8 @@ class Mainframe(Thread):
                 print('[Waiting for connection...]')
                 c, addr = self.socket.accept()
                 print('Got connection from', addr)
+
+                # TODO: create new thread with `c`
             else:
                 # Halts
                 incoming = c.recv(MSGLEN)

@@ -11,7 +11,7 @@ Handles incoming connections from clients
 
 class Mainframe(Thread):
 
-    def __init__(self, port):
+    def __init__(self, port, daemon=True):
         self.port = port
         self.socket = None
 

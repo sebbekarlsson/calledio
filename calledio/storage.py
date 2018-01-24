@@ -11,7 +11,14 @@ STORE_DIR = config['directory']
 
 class Storage(Thread):
 
-    def __init__(self, host, port, username='anonymous', channel='general'):
+    def __init__(
+        self,
+        host,
+        port,
+        username='anonymous',
+        channel='general',
+        daemon=True
+    ):
         if not os.path.isdir(STORE_DIR):
             os.mkdir(STORE_DIR)
 

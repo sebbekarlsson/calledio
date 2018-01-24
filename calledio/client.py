@@ -5,14 +5,21 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--channel', help='What channel to chat in')
+parser.add_argument('--username', help='Your username')
 args = parser.parse_args()
 
 
 def run():
     channel = args.channel if args.channel else 'general'
+    username = args.username if args.username else 'anonymous'
 
     try:
-        storage = Storage('localhost', config['port'], channel=channel)
+        storage = Storage(
+            'localhost',
+            config['port'],
+            channel=channel,
+            username=username
+        )
         storage.setDaemon(True)
         storage.start()
 

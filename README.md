@@ -1,5 +1,6 @@
 # calledio
-> A chat service where you own your data
+> A chat service where you own your data.  
+> No data is stored on a calledio-server.
 
 ## installation
 > run:

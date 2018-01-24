@@ -2,6 +2,10 @@
 > A chat service where you own your data.  
 > No data is stored on a calledio-server.
 
+## Known issues:
+
+    * server is single-threaded (will be fixed soon)
+
 ## installation
 > create your config file:
 

@@ -3,6 +3,12 @@
 > No data is stored on a calledio-server.
 
 ## installation
+> create your config file:
+
+    cp config.example.json config.json
+
+> Edit the `config.json` file...
+
 > run:
 
     python setup.py install

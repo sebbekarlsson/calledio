@@ -12,7 +12,8 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "calledio-client = calledio.client:run_client"
+            "calledio-client = calledio.client:run_client",
+            "calledio-server = calledio.server:run_server"
         ]
     }
 )

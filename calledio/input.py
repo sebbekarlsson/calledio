@@ -21,13 +21,18 @@ class Input(Thread):
             _file.write(text)
         _file.close()
 
-    def start(self, ip, port):
+    def start(self, ip, port, channel):
         s = socket.socket(
             socket.AF_INET,
             socket.SOCK_STREAM
         )
 
         s.connect((ip, port))
+
+        s.send(json.dumps({
+            'channel': channel,
+            'msg': 'hello!'
+        }))
 
         chunks = []
         bytes_recd = 0
@@ -39,5 +44,6 @@ class Input(Thread):
             bytes_recd = bytes_recd + len(chunk)
 
         _data = chunks.join('')
-        data = json.loads(_data)
-        print(data)
+        # data = json.loads(_data)
+
+        self.append(_data)

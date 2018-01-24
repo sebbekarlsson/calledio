@@ -22,7 +22,7 @@
 
 ## Running a client:
 
-    calledio-client
+    calledio-client --channel=flowers
 
 
 ## Where are all messages stored?

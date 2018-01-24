@@ -34,7 +34,23 @@ class Mainframe(Thread):
                 print('Got connection from', addr)
             else:
                 # Halts
-                print('[Waiting for response...]')
                 incoming = c.recv(MSGLEN)
-                data = json.loads(incoming)
+
+                try:
+                    data = json.loads(incoming)
+                except ValueError:
+                    c.close()
+                    c = None
+                    continue
+
+                if data['message'] == '<join>':
+                    c.send(json.dumps({
+                        'channel': data['channel'],
+                        'username': data['username'],
+                        'message': '{} joined!'.format(data['username']),
+                        'notice': True
+                    }))
+
+                    continue
+
                 c.send(json.dumps(data))

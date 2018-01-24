@@ -35,6 +35,22 @@ class Storage(Thread):
         self.socket.connect((self.host, self.port))
         print('Connected to', self.host)
 
+        self.socket.send(json.dumps({
+            'channel': self.channel,
+            'username': self.username,
+            'message': '<join>'
+        }))
+
+        incoming = self.socket.recv(MSGLEN)
+        data = json.loads(incoming)
+
+        if 'notice' in data:
+            if data['notice']:
+                self.append(
+                    data['channel'],
+                    data['message']
+                )
+
         self.run()
 
     def run(self):
@@ -46,7 +62,6 @@ class Storage(Thread):
                 'message': z
             }))
             # Halts
-            print('[Waiting for response...]')
             incoming = self.socket.recv(MSGLEN)
             data = json.loads(incoming)
 

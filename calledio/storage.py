@@ -3,22 +3,32 @@ from calledio.constants import STORE_DIR
 from calledio.constants import MSGLEN
 from threading import Thread
 import socket
+import json
 
 
 class Storage(Thread):
 
-    def __init__(self, host, port):
+    def __init__(self, host, port, username='anonymous', channel='general'):
         if not os.path.isdir(STORE_DIR):
             os.mkdir(STORE_DIR)
 
         self.host = host
         self.port = port
+        self.username = username
+        self.channel = channel
 
     def append(self, channel, text):
         '''
         appends to local channel log
         '''
-        pass
+        channel_file = os.path.join(
+            STORE_DIR,
+            channel + '.log'
+        )
+
+        with open(channel_file, 'a') as _file:
+            _file.write(text + '\n')
+        _file.close()
 
     def start(self):
         self.socket = socket.socket()
@@ -30,7 +40,17 @@ class Storage(Thread):
     def run(self):
         while True:
             z = raw_input("Enter something for the server: ")
-            self.socket.send(z)
+            self.socket.send(json.dumps({
+                'channel': self.channel,
+                'username': self.username,
+                'message': z
+            }))
             # Halts
             print('[Waiting for response...]')
-            print(self.socket.recv(MSGLEN))
+            incoming = self.socket.recv(MSGLEN)
+            data = json.loads(incoming)
+
+            self.append(
+                data['channel'],
+                '{}: {}'.format(data['username'], data['message'])
+            )

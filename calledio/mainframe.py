@@ -1,6 +1,7 @@
 from calledio.constants import MSGLEN
 from threading import Thread
 import socket
+import json
 
 
 '''
@@ -34,5 +35,6 @@ class Mainframe(Thread):
             else:
                 # Halts
                 print('[Waiting for response...]')
-                print(c.recv(MSGLEN))
-                c.send('Welcome to the server')
+                incoming = c.recv(MSGLEN)
+                data = json.loads(incoming)
+                c.send(json.dumps(data))

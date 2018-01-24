@@ -1,5 +1,5 @@
 from calledio.storage import Storage
-from calledio.constants import PORT_DEFAULT
+from calledio.config import config
 import argparse
 
 
@@ -11,6 +11,6 @@ args = parser.parse_args()
 def run():
     channel = args.channel if args.channel else 'general'
 
-    storage = Storage('localhost', PORT_DEFAULT, channel=channel)
+    storage = Storage('localhost', config['port'], channel=channel)
 
     storage.start()

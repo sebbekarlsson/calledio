@@ -1,7 +1,7 @@
 from calledio.mainframe import Mainframe
-from calledio.constants import PORT_DEFAULT
+from calledio.config import config
 
 
 def run():
-    mainframe = Mainframe(PORT_DEFAULT)
+    mainframe = Mainframe(config['port'])
     mainframe.start()

@@ -49,7 +49,8 @@ class Mainframe(Thread):
                     c.send(json.dumps({
                         'channel': data['channel'],
                         'username': data['username'],
-                        'message': '{} joined!'.format(data['username']),
+                        'message': '- ** {} joined! ** -'
+                        .format(data['username']),
                         'notice': True
                     }))
 

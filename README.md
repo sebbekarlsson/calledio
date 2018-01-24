@@ -2,6 +2,8 @@
 > A chat service where you own your data.  
 > No data is stored on a calledio-server.
 
+![chat.png](chat.png)
+
 ## Known issues:
 * server is single-threaded (will be fixed soon)
 

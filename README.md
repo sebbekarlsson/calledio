@@ -4,9 +4,6 @@
 
 ![chat.png](chat.png)
 
-## Known issues:
-* server is single-threaded (will be fixed soon)
-
 ## installation
 > create your config file:
 

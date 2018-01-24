@@ -12,18 +12,21 @@ class Mainframe(Thread):
 
     def __init__(self, port):
         self.port = port
-        self.socket = socket.socket()
-        host = 'localhost'  # socket.gethostname()
-        self.socket.bind((host, port))
+        self.socket = None
 
     def start(self):
-        pass
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        host = 'localhost'  # socket.gethostname()
+        self.socket.bind((host, self.port))
+
+        self.run()
 
     def run(self):
         c = None
 
         while True:
             if c is None:
+                self.socket.listen(5)
                 # Halts
                 print('[Waiting for connection...]')
                 c, addr = self.socket.accept()

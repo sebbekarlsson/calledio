@@ -1,2 +1,6 @@
+from calledio.mainframe import Mainframe
+
+
 def run():
-    pass
+    mainframe = Mainframe(5555)
+    mainframe.start()

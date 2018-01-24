@@ -1,6 +1,7 @@
 from calledio.constants import DATA_DIR, MSGLEN
 from threading import Thread
 import socket
+import json
 
 
 '''
@@ -36,3 +37,7 @@ class Input(Thread):
                 raise RuntimeError("socket connection broken")
             chunks.append(chunk)
             bytes_recd = bytes_recd + len(chunk)
+
+        _data = chunks.join('')
+        data = json.loads(_data)
+        print(data)

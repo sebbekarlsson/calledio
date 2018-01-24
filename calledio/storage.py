@@ -1,9 +1,12 @@
 import os
-from calledio.constants import STORE_DIR
 from calledio.constants import MSGLEN
+from calledio.config import config
 from threading import Thread
 import socket
 import json
+
+
+STORE_DIR = config['directory']
 
 
 class Storage(Thread):

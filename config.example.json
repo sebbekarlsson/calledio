@@ -1,4 +1,5 @@
 {
     "host": "localhost",
-    "port": 5555
+    "port": 5555,
+    "directory": "/directory/where/you/want/channels/to/be/stored"
 }

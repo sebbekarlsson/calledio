@@ -23,10 +23,10 @@
 
 
 ## Where are all messages stored?
-> all messages are stored in `$HOME/.calledio/`,  
+> You specify in the `config.json` where to store messages / channels.  
 > if you have sent a message to the channel `general` for example,  
-> then those messages will be stored in `$HOME/.calledio/general.log`
+> then those messages will be stored in `$directory/general.log`
 
 > To view your messages _live_, you could do:
 
-    tail -f ~/.calledio/general.log
+    tail -f $directory/general.log

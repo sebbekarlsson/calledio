@@ -1,5 +1,7 @@
 #### joe made this: http://goel.io/joe
 
+config.json
+
 #### vim ####
 # Swap
 [._]*.s[a-v][a-z]
@@ -24,7 +26,8 @@ tags
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*

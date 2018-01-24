@@ -11,6 +11,16 @@ args = parser.parse_args()
 def run():
     channel = args.channel if args.channel else 'general'
 
-    storage = Storage('localhost', config['port'], channel=channel)
+    try:
+        storage = Storage('localhost', config['port'], channel=channel)
+        storage.setDaemon(True)
+        storage.start()
 
-    storage.start()
+        while True:
+            storage.join(1)
+
+    except KeyboardInterrupt:
+        storage.killed = True
+        storage.socket.close()
+
+        return True

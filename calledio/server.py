@@ -3,5 +3,16 @@ from calledio.config import config
 
 
 def run():
-    mainframe = Mainframe(config['port'])
-    mainframe.start()
+    try:
+        mainframe = Mainframe(config['port'])
+        mainframe.setDaemon(True)
+        mainframe.start()
+
+        while True:
+            mainframe.join(1)
+
+    except KeyboardInterrupt:
+        mainframe.killed = True
+        mainframe.socket.close()
+
+        return True

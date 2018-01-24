@@ -19,6 +19,8 @@ class Storage(Thread):
         channel='general',
         daemon=True
     ):
+        Thread.__init__(self)
+
         if not os.path.isdir(STORE_DIR):
             os.mkdir(STORE_DIR)
 
@@ -26,6 +28,7 @@ class Storage(Thread):
         self.port = port
         self.username = username
         self.channel = channel
+        self.killed = False
 
     def append(self, channel, text):
         '''
@@ -40,7 +43,7 @@ class Storage(Thread):
             _file.write(text + '\n')
         _file.close()
 
-    def start(self):
+    def run(self):
         self.socket = socket.socket()
         self.socket.connect((self.host, self.port))
         print('Connected to', self.host)
@@ -61,11 +64,8 @@ class Storage(Thread):
                     data['message']
                 )
 
-        self.run()
-
-    def run(self):
-        while True:
-            z = raw_input("Enter something for the server: ")
+        while not self.killed:
+            z = raw_input("message: ")
             self.socket.send(json.dumps({
                 'channel': self.channel,
                 'username': self.username,

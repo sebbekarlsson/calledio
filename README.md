@@ -21,8 +21,7 @@
 
 ## Running a client:
 
-    calledio-client --channel=flowers
-
+    calledio-client --channel=flowers --username=stallman
 
 ## Where are all messages stored?
 > You specify in the `config.json` where to store messages / channels.  

@@ -18,13 +18,11 @@ class Mainframe(Thread):
         self.connections = []
 
     def broadcast(self, data):
-        print('will broadcast: ' + data)
         for connection in self.connections:
             if not connection.socket:
                 self.connections.remove(connection)
                 continue
 
-            print('sending to: ' + connection.username)
             connection.socket.send(data)
 
     def run(self):

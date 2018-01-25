@@ -53,6 +53,13 @@ class Storage(Thread):
             _file.write(text + '\n')
         _file.close()
 
+    def send_message(self, msg):
+        return self.socket.send(json.dumps({
+            'channel': self.channel,
+            'username': self.username,
+            'message': msg
+        }))
+
     def run(self):
         self.socket = socket.socket()
         self.socket.connect((self.host, self.port))
@@ -68,9 +75,5 @@ class Storage(Thread):
         }))
 
         while not self.killed:
-            z = raw_input("message: ")
-            self.socket.send(json.dumps({
-                'channel': self.channel,
-                'username': self.username,
-                'message': z
-            }))
+            cli_input = raw_input("message: ")
+            self.send_message(cli_input)

@@ -35,7 +35,9 @@
 ## Custom message store
 > Want to integrate calledio in your own application?
 > You can create your own method for storing messages by doing:
-    
+    from calledio.storage import Storage
+
+     
     def my_append(channel, text):
         # save somewhere
         # channel = channel name
@@ -45,3 +47,5 @@
     
     storage = Storage(host, port)
     storage._append = my_append
+
+    storage.start() # starting the client

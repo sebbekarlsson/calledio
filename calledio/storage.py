@@ -1,6 +1,7 @@
 import os
 from calledio.constants import MSGLEN
 from calledio.config import config
+from calledio.storage_receiver import Receiver
 from threading import Thread
 import socket
 import json
@@ -29,6 +30,7 @@ class Storage(Thread):
         self.username = username
         self.channel = channel
         self.killed = False
+        self.receiver = Receiver(self)
 
     def append(self, channel, text):
         '''
@@ -55,7 +57,11 @@ class Storage(Thread):
         }))
 
         incoming = self.socket.recv(MSGLEN)
-        data = json.loads(incoming)
+
+        try:
+            data = json.loads(incoming)
+        except ValueError:
+            data = {}
 
         if 'notice' in data:
             if data['notice']:
@@ -64,6 +70,9 @@ class Storage(Thread):
                     data['message']
                 )
 
+        self.receiver.setDaemon(True)
+        self.receiver.start()
+
         while not self.killed:
             z = raw_input("message: ")
             self.socket.send(json.dumps({
@@ -71,11 +80,3 @@ class Storage(Thread):
                 'username': self.username,
                 'message': z
             }))
-            # Halts
-            incoming = self.socket.recv(MSGLEN)
-            data = json.loads(incoming)
-
-            self.append(
-                data['channel'],
-                '{}: {}'.format(data['username'], data['message'])
-            )

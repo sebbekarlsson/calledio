@@ -9,10 +9,11 @@ class Connection(Thread):
         Thread.__init__(self)
         self.socket = socket
         self.mainframe = mainframe
+        self.username = None
+        self.channel = None
 
     def run(self):
         while True:
-            # Halts
             incoming = self.socket.recv(MSGLEN)
 
             try:
@@ -20,14 +21,27 @@ class Connection(Thread):
             except ValueError:
                 self.socket.close()
                 self.socket = None
+
+                if self.channel and self.username:
+                    self.mainframe.broadcast(json.dumps({
+                        'channel': self.channel,
+                        'username': self.username,
+                        'message': '<leave>{}</leave>'
+                        .format(self.username),
+                        'notice': True
+                    }))
+
                 return False
 
             if data['message'] == '<join>':
+                self.channel = data['channel']
+                self.username = data['username']
+
                 self.socket.send(json.dumps({
-                    'channel': data['channel'],
-                    'username': data['username'],
-                    'message': '- ** {} joined! ** -'
-                    .format(data['username']),
+                    'channel': self.channel,
+                    'username': self.username,
+                    'message': '<join>{}</join>'
+                    .format(self.username),
                     'notice': True
                 }))
 

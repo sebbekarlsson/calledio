@@ -15,23 +15,35 @@ class Mainframe(Thread):
         self.port = port
         self.socket = None
         self.killed = False
+        self.connections = []
+
+    def broadcast(self, data):
+        print('will broadcast: ' + data)
+        for connection in self.connections:
+            if not connection.socket:
+                self.connections.remove(connection)
+                continue
+
+            print('sending to: ' + connection.username)
+            connection.socket.send(data)
 
     def run(self):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        host = 'localhost'  # socket.gethostname()
+        host = 'localhost'
         self.socket.bind((host, self.port))
 
         c = None
 
         while not self.killed:
             self.socket.listen(5)
-            # Halts
-            print('[Waiting for connection...]')
+            print('Waiting for connections...')
+
             c, addr = self.socket.accept()
             print('Got connection from', addr)
+
             connection = Connection(socket=c, mainframe=self)
             connection.setDaemon(True)
             connection.start()
-            print('continue')
+            self.connections.append(connection)
 
         return True

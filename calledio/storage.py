@@ -58,14 +58,14 @@ class Storage(Thread):
         self.socket.connect((self.host, self.port))
         print('Connected to', self.host)
 
+        self.receiver.setDaemon(True)
+        self.receiver.start()
+
         self.socket.send(json.dumps({
             'channel': self.channel,
             'username': self.username,
             'message': '<join>'
         }))
-
-        self.receiver.setDaemon(True)
-        self.receiver.start()
 
         while not self.killed:
             z = raw_input("message: ")

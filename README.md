@@ -31,3 +31,17 @@
 > To view your messages _live_, you could do:
 
     tail -f $directory/general.log
+
+## Custom message store
+> Want to integrate calledio in your own application?
+> You can create your own method for storing messages by doing:
+    
+    def my_append(channel, text):
+        # save somewhere
+        # channel = channel name
+        # text = the line that should be saved somewhere
+
+        save_to_awesome_database(channel, text) # whatever
+    
+    storage = Storage(host, port)
+    storage._append = my_append

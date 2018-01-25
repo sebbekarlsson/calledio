@@ -30,11 +30,15 @@ class Storage(Thread):
         self.channel = channel
         self.killed = False
         self.receiver = Receiver(self)
+        self._append = None
 
     def append(self, channel, text):
         '''
         appends to local channel log
         '''
+
+        if self._append:
+            return self._append(channel, text)
 
         user_dir = os.path.join(
             STORE_DIR,

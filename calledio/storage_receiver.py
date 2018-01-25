@@ -3,6 +3,11 @@ from threading import Thread
 import json
 
 
+'''
+Handles incoming messsages
+'''
+
+
 class Receiver(Thread):
 
     def __init__(self, storage):

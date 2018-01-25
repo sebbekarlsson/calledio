@@ -3,6 +3,11 @@ from threading import Thread
 import json
 
 
+'''
+Holds a clients connection
+'''
+
+
 class Connection(Thread):
 
     def __init__(self, socket, mainframe):

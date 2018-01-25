@@ -1,5 +1,4 @@
 import os
-from calledio.constants import MSGLEN
 from calledio.config import config
 from calledio.storage_receiver import Receiver
 from threading import Thread

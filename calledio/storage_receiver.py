@@ -23,6 +23,14 @@ class Receiver(Thread):
             except ValueError:
                 continue
 
+            if 'notice' in data:
+                if data['notice']:
+                    self.storage.append(
+                        data['channel'],
+                        data['message']
+                    )
+                    continue
+
             self.storage.append(
                 data['channel'],
                 '{}: {}'.format(data['username'], data['message'])

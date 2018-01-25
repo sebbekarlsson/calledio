@@ -45,6 +45,14 @@ class Connection(Thread):
                 self.socket.send(json.dumps({
                     'channel': self.channel,
                     'username': self.username,
+                    'message': '****** WELCOME TO {} ******'
+                    .format(self.channel.upper()),
+                    'notice': True
+                }))
+
+                self.mainframe.broadcast(json.dumps({
+                    'channel': self.channel,
+                    'username': self.username,
                     'message': '<join>{}</join>'
                     .format(self.username),
                     'notice': True
@@ -52,4 +60,4 @@ class Connection(Thread):
 
                 continue
 
-            self.socket.send(json.dumps(data))
+            self.mainframe.broadcast(json.dumps(data))

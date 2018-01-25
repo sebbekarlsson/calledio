@@ -36,8 +36,17 @@ class Storage(Thread):
         '''
         appends to local channel log
         '''
-        channel_file = os.path.join(
+
+        user_dir = os.path.join(
             STORE_DIR,
+            self.username
+        )
+
+        if not os.path.isdir(user_dir):
+            os.mkdir(user_dir)
+
+        channel_file = os.path.join(
+            user_dir,
             channel + '.log'
         )
 
@@ -55,20 +64,6 @@ class Storage(Thread):
             'username': self.username,
             'message': '<join>'
         }))
-
-        incoming = self.socket.recv(MSGLEN)
-
-        try:
-            data = json.loads(incoming)
-        except ValueError:
-            data = {}
-
-        if 'notice' in data:
-            if data['notice']:
-                self.append(
-                    data['channel'],
-                    data['message']
-                )
 
         self.receiver.setDaemon(True)
         self.receiver.start()

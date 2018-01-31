@@ -26,11 +26,11 @@
 ## Where are all messages stored?
 > You specify in the `config.json` where to store messages / channels.  
 > if you have sent a message to the channel `general` for example,  
-> then those messages will be stored in `$directory/general.log`
+> then those messages will be stored in `$directory/$username/general.log`
 
 > To view your messages _live_, you could do:
 
-    tail -f $directory/general.log
+    tail -f $directory/$username/general.log
 
 ## Custom message store
 > Want to integrate calledio in your own application?
